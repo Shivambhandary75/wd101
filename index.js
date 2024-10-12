@@ -19,22 +19,8 @@ const display_rec_items = () => {
         return row;
     }).join("\n");
 
-    const table = `
-        <thead>
-            <tr>
-                <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Email id</th>
-                <th class="px-4 py-2">Password</th>
-                <th class="px-4 py-2">D.O.B</th>
-                <th class="px-4 py-2">Accepted Terms?</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${tableEntries}
-        </tbody>`;
-        
-    let details = document.getElementById("user-entries");
-    details.innerHTML = table;
+    let details = document.getElementById("user-entries").getElementsByTagName("tbody")[0];
+    details.innerHTML = tableEntries; // Fill in the tbody with entries
 };
 
 const validateDOB = (dob) => {
@@ -58,7 +44,7 @@ const savedform = (event) => {
 
     if (!validateDOB(dob)) {
         alert("You must be between 18 and 55 years old.");
-        return; // Stop the form submission
+        return; 
     }
 
     const individual = {
@@ -75,4 +61,4 @@ const savedform = (event) => {
 };
 
 userform.addEventListener("submit", savedform);
-display_rec_items();
+display_rec_items(); 

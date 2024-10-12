@@ -39,7 +39,7 @@
             box-shadow: 0 10px 6px rgba(0, 0, 0, 0.2);
         }
 
-        /* New styles for the entries table */
+        
         .entries-table {
             width: 80%;
             margin: 20px auto;
@@ -78,7 +78,7 @@
             <input type="password" id="password" name="password" class="alignment" required placeholder="Enter your Password">
             <br><br>
             <label for="dob">D.O.B<span style="color: red;">*</span></label>
-            <input type="date" id="dob" name="dob" class="alignment" required placeholder="Enter your D.O.B">
+            <input type="date" id="dob" name="dob" class="alignment" required>
             <br><br>
             <input type="checkbox" id="accept_terms_conditions" required>
             <label for="accept_terms_conditions">I have read the terms and condition and I accept it<span style="color: red;">*</span></label>
@@ -91,7 +91,20 @@
         <div class="mx-auto">
             <h2 class="text-3xl text-center font-bold leading-tight">Entries</h2>
             <div class="divide-y divide-gray-300/50">
-                <table class="entries-table" id="user-entries"></table>
+                <table class="entries-table" id="user-entries">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Email id</th>
+                            <th class="px-4 py-2">Password</th>
+                            <th class="px-4 py-2">D.O.B</th>
+                            <th class="px-4 py-2">Accepted Terms?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
