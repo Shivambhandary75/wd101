@@ -1,27 +1,30 @@
 let userform = document.getElementById("userform");
 
+
 const get_items = () => {
     let rec_entries = localStorage.getItem("user-entries");
     return rec_entries ? JSON.parse(rec_entries) : [];
 };
 
-let record = get_items();
 
 const display_rec_items = () => {
     const rec_entries = get_items();
     const tableEntries = rec_entries.map((entry) => {
-        const name_cell = `<td class="border px-4 py-2">${entry.name}</td>`;
-        const email_cell = `<td class="border px-4 py-2">${entry.email}</td>`;
-        const password_cell = `<td class="border px-4 py-2">${entry.password}</td>`;
-        const dob_cell = `<td class="border px-4 py-2">${entry.dob}</td>`;
-        const accept_terms_cell = `<td class="border px-4 py-2">${entry.accept_terms_conditions ? 'Yes' : 'No'}</td>`;
-        const row = `<tr>${name_cell}${email_cell}${password_cell}${dob_cell}${accept_terms_cell}</tr>`;
-        return row;
-    }).join("\n");
+        return `
+            <tr>
+                <td class="border px-4 py-2">${entry.name}</td>
+                <td class="border px-4 py-2">${entry.email}</td>
+                <td class="border px-4 py-2">${entry.password}</td>
+                <td class="border px-4 py-2">${entry.dob}</td>
+                <td class="border px-4 py-2">${entry.accept_terms_conditions ? 'Yes' : 'No'}</td>
+            </tr>
+        `;
+    }).join("");
 
-    let details = document.getElementById("user-entries").getElementsByTagName("tbody")[0];
-    details.innerHTML = tableEntries; // Fill in the tbody with entries
+    const tbody = document.querySelector("#user-entries tbody");
+    tbody.innerHTML = tableEntries; 
 };
+
 
 const validateDOB = (dob) => {
     const today = new Date();
@@ -34,6 +37,7 @@ const validateDOB = (dob) => {
     return age >= 18 && age <= 55;
 };
 
+
 const savedform = (event) => {
     event.preventDefault();
     const name = document.getElementById("name").value;
@@ -42,6 +46,7 @@ const savedform = (event) => {
     const dob = document.getElementById("dob").value;
     const accept_terms_conditions = document.getElementById("accept_terms_conditions").checked;
 
+    
     if (!validateDOB(dob)) {
         alert("You must be between 18 and 55 years old.");
         return; 
@@ -55,10 +60,13 @@ const savedform = (event) => {
         accept_terms_conditions,
     };
 
-    record.push(individual);
-    localStorage.setItem("user-entries", JSON.stringify(record));
-    display_rec_items();
+    
+    const record = get_items(); 
+    record.push(individual); 
+    localStorage.setItem("user-entries", JSON.stringify(record)); 
+    display_rec_items(); 
 };
+
 
 userform.addEventListener("submit", savedform);
 display_rec_items(); 
