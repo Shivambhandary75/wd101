@@ -1,18 +1,10 @@
-
-// Set date restrictions for the D.O.B field
-const dobInput = document.getElementById("dob");
-const today = new Date();
-const minDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
-const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-
-dobInput.setAttribute("max", maxDate.toISOString().split("T")[0]);
-dobInput.setAttribute("min", minDate.toISOString().split("T")[0]);
-
 let userform = document.getElementById("userform");
+
 const get_items = () => {
     let rec_entries = localStorage.getItem("user-entries");
     return rec_entries ? JSON.parse(rec_entries) : [];
 };
+
 let record = get_items();
 
 const display_rec_items = () => {
@@ -40,9 +32,20 @@ const display_rec_items = () => {
         <tbody>
             ${tableEntries}
         </tbody>`;
-
+        
     let details = document.getElementById("user-entries");
     details.innerHTML = table;
+};
+
+const validateDOB = (dob) => {
+    const today = new Date();
+    const dobDate = new Date(dob);
+    const age = today.getFullYear() - dobDate.getFullYear();
+    const monthDiff = today.getMonth() - dobDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+        age--;
+    }
+    return age >= 18 && age <= 55;
 };
 
 const savedform = (event) => {
@@ -52,6 +55,11 @@ const savedform = (event) => {
     const password = document.getElementById("password").value;
     const dob = document.getElementById("dob").value;
     const accept_terms_conditions = document.getElementById("accept_terms_conditions").checked;
+
+    if (!validateDOB(dob)) {
+        alert("You must be between 18 and 55 years old.");
+        return; // Stop the form submission
+    }
 
     const individual = {
         name,
