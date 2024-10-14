@@ -1,4 +1,3 @@
-// Function to load data from local storage and display it in the table
 function loadEntries() {
     const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
     const entries = JSON.parse(localStorage.getItem('entries')) || [];
@@ -13,14 +12,12 @@ function loadEntries() {
     });
 }
 
-// Function to save entry to local storage
 function saveEntry(name, email, password, dob, terms) {
     const entries = JSON.parse(localStorage.getItem('entries')) || [];
     entries.push({ name, email, password, dob, terms });
     localStorage.setItem('entries', JSON.stringify(entries));
 }
 
-// Load entries when the page is loaded
 window.onload = loadEntries;
 
 document.getElementById('registrationForm').addEventListener('submit', function (event) {
@@ -32,14 +29,12 @@ document.getElementById('registrationForm').addEventListener('submit', function 
     const dob = document.getElementById('dob').value;
     const terms = document.getElementById('terms').checked;
 
-    // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
         alert('Please enter a valid email address.');
         return;
     }
 
-    // Validate age (between 18 and 55)
     const dobDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - dobDate.getFullYear();
@@ -55,10 +50,8 @@ document.getElementById('registrationForm').addEventListener('submit', function 
         return;
     }
 
-    // Save entry to local storage
     saveEntry(name, email, password, dob, terms);
 
-    // Create a new row in the table
     const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
     const newRow = table.insertRow();
     
@@ -67,7 +60,5 @@ document.getElementById('registrationForm').addEventListener('submit', function 
     newRow.insertCell(2).innerText = password;
     newRow.insertCell(3).innerText = dob;
     newRow.insertCell(4).innerText = terms ? 'true' : 'false';
-
-    // Optionally reset the form after submission
     document.getElementById('registrationForm').reset();
 });
